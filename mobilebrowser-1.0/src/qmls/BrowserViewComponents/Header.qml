@@ -28,7 +28,6 @@ Item {
    id: header
    property alias loading: fieldText.loading
 
-   height: 100
    z: 1
 
    signal urlChanged(string urlString)
@@ -92,9 +91,8 @@ Item {
 
          MouseArea {
              anchors.fill:parent
-             onClicked: mainWindow.showMinimized()
+             onClicked: appcore.minimizeApp();
          }
-
       }
 
       // Header Text: Holds the Page Title
@@ -109,11 +107,12 @@ Item {
          style: Text.Sunken
 
          font.family: "Helvetica"
-         font.pointSize: 20
+         font.pixelSize: parent.height * 1/3
          font.bold: true
 
          anchors.left: busyLoadingIcon.right
          anchors.right: quitButton.left
+
          anchors.leftMargin: 4
          anchors.rightMargin: 4
          anchors.top: headerSkeleton.top
@@ -142,7 +141,8 @@ Item {
       }
 
       Item {
-         width: parent.width
+         anchors.left: parent.left
+         anchors.right: parent.right
          anchors.top: headerText.bottom
          anchors.topMargin: 4
          anchors.bottom: parent.bottom
@@ -177,11 +177,12 @@ Item {
 
          Rectangle {
             id: urlBox
-            height: header.height/2
-            anchors.left: parent.left
+
+            anchors.fill: parent
             anchors.leftMargin: 10
-            anchors.right: parent.right
             anchors.rightMargin: 10
+            anchors.bottomMargin: border.width
+
             clip: true
             property bool mouseGrabbed: false
             color: "transparent"
@@ -192,18 +193,23 @@ Item {
 
             FieldText {
                id: fieldText
+
                mouseGrabbed: parent.mouseGrabbed
 
                onEditFinished: { header.urlChanged(fieldText.text); }
                onReloadRequested: { webView.reload.trigger(); }
                onStopRequested: { webView.stop.trigger(); }
 
-               anchors.left: urlBox.left
-               anchors.right: urlBox.right
-               anchors.leftMargin: 6
-               anchors.rightMargin: 6
-               anchors.verticalCenter: urlBox.verticalCenter
-               anchors.verticalCenterOffset: 1
+               anchors.fill:  parent;
+               anchors.topMargin: parent.border.width + 1
+               anchors.bottomMargin: parent.border.width + 1
+               //anchors.left: urlBox.left
+               //anchors.right: urlBox.right
+               anchors.leftMargin: parent.border.width + 2
+               anchors.rightMargin: parent.border.width + 2
+
+               //anchors.verticalCenter: urlBox.verticalCenter
+               //anchors.verticalCenterOffset: 1
             }
          }
       }

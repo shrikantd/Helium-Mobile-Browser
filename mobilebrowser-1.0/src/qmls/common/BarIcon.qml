@@ -58,7 +58,7 @@ Item {
             id: badgeText
             text: (barIcon.badgeValue > 9) ? " + " : barIcon.badgeValue;
             anchors.centerIn: parent; color: "white";
-            font.bold: true; font.pointSize: 12;
+            font.bold: true; font.pixelSize: 15;
          }
 //         effect: DropShadow { blurRadius: 20; offset.x: 0; offset.y: 0; }
       }

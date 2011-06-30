@@ -65,6 +65,7 @@ Item {
 
    Header {
       id: header
+      height: uiMetrics.topBarHeight;
       anchors.top: parent.top
       anchors.left: parent.left
       anchors.right: parent.right
@@ -134,6 +135,7 @@ Item {
    TabBar {
       id: tabs
       z: 2
+      height: uiMetrics.bottomBarHeight;
       anchors.bottom: parent.bottom
       anchors.left: parent.left
       anchors.right: parent.right

@@ -48,6 +48,7 @@ Rectangle {
       anchors.topMargin: 5
       z: 2
    }
+
    Text {
       id: label
       color: "#fff"
@@ -55,7 +56,7 @@ Rectangle {
       style: Text.Sunken
 
       font.family: "Helvetica"
-      font.pointSize: 12
+      font.pixelSize: uiMetrics.tabButtonPixelSize;
       font.bold: true
 
       anchors.horizontalCenter: parent.horizontalCenter

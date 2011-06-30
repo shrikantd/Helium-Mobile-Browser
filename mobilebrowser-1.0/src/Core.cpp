@@ -10,13 +10,25 @@
 #include <QMetaType>
 #include <QTimer>
 #include <QList>
-#include <QDesktopWidget>
+
+#if defined(MOBILE_BUILD)
+    #include <QDesktopWidget>
+#endif
+
 #include <QInputContext>
 
 #include "macros.h"
 #include "Settings.h"
 #include "FaviconImageProvider.h"
 #include "OrientationFollower.h"
+
+#ifdef Q_OS_SYMBIAN
+#include <e32event.h>
+#include <e32std.h>
+#include <e32keys.h>
+#include <e32svr.h>
+#endif
+
 
 #define ENGINE_BASEURL                    "qrc:/qmls/"
 #define BROWSERVIEW_QML                   "BrowserView.qml"
@@ -43,19 +55,23 @@ Core::Core(MainView *mainView, QObject *parent) :
 
    QDeclarativeContext *context = mainView->rootContext();
 
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN32)
+
+   QRect screenSize;
+#if defined(DESKTOP_BUILD)
    //desktop build, defaults
-   context->setContextProperty("screenWidth", DEFAULT_WIDTH);
-   context->setContextProperty("screenHeight", DEFAULT_HEIGHT);
+   screenSize = QRect( 0,0, DEFAULT_WIDTH, DEFAULT_HEIGHT );
+#elif defined(MOBILE_BUILD)
+   screenSize = QRect( 0,0, qApp->desktop()->width(), qApp->desktop()->height() );
 #else
-   //TODO recognise whether Q_OS_LINUX is defined and understand whether is meego or desktop linux
-   //mobile builds, we want the whole screen!
-   context->setContextProperty("screenWidth", qApp->desktop()->width());
-   context->setContextProperty("screenHeight", qApp->desktop()->height());
+    #error "not a MOBILE_BUILD nor a DESKTOP_BUILD, check your code dude!"
 #endif
+   context->setContextProperty("screenWidth", screenSize.width());
+   context->setContextProperty("screenHeight", screenSize.height());
 
    context->setContextProperty("Orientation", orientation);
    context->setContextProperty("mainWindow", mainView);
+
+   context->setContextProperty("uiMetrics", &m_metrics);
 
    // Initialize Settings
    Settings::initSettings();
@@ -172,6 +188,22 @@ void Core::historyCurrentUrl() {
 void Core::showBrowserView() {
    QDEBUG("Core::showBrowserView()");
    emit m_showBrowserView();
+}
+
+void Core::minimizeApp() {
+#if defined(Q_OS_MEEGO) || defined(DESKTOP_BUILD)
+    if( m_mainView ) {
+        m_mainView->showMinimized();
+    }
+#elif defined(Q_OS_SYMBIAN)
+    TRawEvent lEventDown;
+    lEventDown.Set(TRawEvent::EKeyDown, EStdKeyApplication0);
+    UserSvr::AddEvent(lEventDown);
+    User::After(700000);
+    TRawEvent lEventUp;
+    lEventUp.Set(TRawEvent::EKeyUp, EStdKeyApplication0);
+    UserSvr::AddEvent(lEventUp);
+#endif
 }
 
 void Core::showLogbookView() {

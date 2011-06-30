@@ -15,6 +15,7 @@ MainView::MainView(QWidget *parent) :
    #else
       format.setSampleBuffers(false);
    #endif
+   #warning "using QGLWidget"
    QGLWidget *glWidget = new QGLWidget(format, this);
    setViewport(glWidget);
    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);

@@ -79,26 +79,32 @@ Item {
 
    Image {
       id: favIcon
-      height: parent.height-8
+//      height: parent.height
       width: height
       smooth: true; asynchronous: true;
       fillMode: Image.PreserveAspectFit
-      anchors.verticalCenter: parent.verticalCenter
+
+      anchors.top: parent.top;
+      anchors.bottom: parent.bottom;
       anchors.left: parent.left
-      anchors.leftMargin: 4
+
+      anchors.margins: 4
       opacity: 0;
       source: "image://favicons/"+webView.url
    }
 
    Image {
       id: defaultFavIcon
-      height: parent.height-8
       width: height
+
       smooth: true
       fillMode: Image.PreserveAspectFit
-      anchors.verticalCenter: parent.verticalCenter
+
+      anchors.top: parent.top;
+      anchors.bottom: parent.bottom;
       anchors.left: parent.left
-      anchors.leftMargin: 4
+      anchors.margins: 4
+
       source: "qrc:/qmls/pics/default-favico-30x30.png"
       opacity: 1
    }
@@ -114,14 +120,17 @@ Item {
       }
 
       anchors.left: defaultFavIcon.right
-      anchors.leftMargin: 4
       anchors.right: reloadIcon.left
-      anchors.rightMargin: 4
-      anchors.verticalCenter: parent.verticalCenter
+      anchors.margins: 4
+
+
+      //anchors.verticalCenter: parent.verticalCenter
       color: "#444444"
+
       font.family: "Helvetica"
       font.bold: false
-      font.pointSize: 18
+      font.pixelSize: parent.height * 0.85
+
       readOnly: true
       onAccepted: { finishEdit(); }
       Keys.onEscapePressed: { abortEdit(); }
@@ -135,13 +144,16 @@ Item {
 
    Image {
       id: reloadIcon
-      height: parent.height-4
       width: height
-      smooth: true
-      anchors.verticalCenter: parent.verticalCenter
-      anchors.right: parent.right
-      anchors.rightMargin: 4
+
+      anchors.top: parent.top;
+      anchors.bottom: parent.bottom;
+      anchors.right: parent.right;
+      anchors.margins: 4
+
       source: "qrc:/qmls/pics/reload-30x30.png"
+      smooth: true
+
       opacity: 0.7
       MouseArea {
          anchors.fill: parent
@@ -153,14 +165,17 @@ Item {
 
    Image {
       id: clearIcon
-      height: parent.height-4
       width: height
-      smooth: true
-      anchors.verticalCenter: parent.verticalCenter
-      anchors.right: parent.right
-      anchors.rightMargin: 4
+
+      anchors.top: parent.top;
+      anchors.bottom: parent.bottom;
+      anchors.right: parent.right;
+      anchors.margins: 4
+
       source: "qrc:/qmls/pics/clear-30x30.png"
+      smooth: true
       opacity: 0
+
       MouseArea {
          anchors.fill: parent
          onClicked: { textEdit.text = ''; }
@@ -171,14 +186,17 @@ Item {
 
    Image {
       id: stopIcon
-      height: parent.height-4
       width: height
-      smooth: true
-      anchors.verticalCenter: parent.verticalCenter
-      anchors.right: parent.right
-      anchors.rightMargin: 4
+
+      anchors.top: parent.top;
+      anchors.bottom: parent.bottom;
+      anchors.right: parent.right;
+      anchors.margins: 4
+
       source: "qrc:/qmls/pics/stop-30x30.png"
+      smooth: true
       opacity: 0
+
       MouseArea {
          anchors.fill: parent
          onClicked: { fieldText.stopRequested(); }

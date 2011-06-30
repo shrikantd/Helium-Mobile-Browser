@@ -48,23 +48,27 @@ Item {
       // Header
       Header {
          id: header
+         height: uiMetrics.topBarHeight;
          width: parent.width
          onUrlChanged: { webView.changeUrl(urlString); }
          loading: webView.loading
+
          z: 3
       }
 
       // WebView
       FlickableWebView {
          id: webView
-         width: parent.width
+
          anchors.top: header.bottom
          anchors.bottom: footer.top
          anchors.left: parent.left
          anchors.right: parent.right
+
          onGotFocus: { header.abortEdit(); }
          onUrlChanged: { header.setDefaultFavIcon(); header.changeUrl(urlString); }
          onIconChanged: { header.updateFavIcon(); }
+
          z: 1
       }
 
@@ -75,12 +79,15 @@ Item {
          whenToShow: webView.moving
          positionInContent: webView.visibleArea.yPosition
          visibleContent: webView.visibleArea.heightRatio
+
          width: 8
+
          anchors.top: parent.top
          anchors.topMargin: header.height
          anchors.right: parent.right
          anchors.bottom: footer.top
          anchors.bottomMargin: 8
+
          z: 3
       }
 
@@ -91,11 +98,14 @@ Item {
          whenToShow: webView.moving
          positionInContent: webView.visibleArea.xPosition
          visibleContent: webView.visibleArea.widthRatio
+
          height: 8
+
          anchors.left: parent.left
          anchors.right: parent.right
          anchors.rightMargin: 8
          anchors.bottom: footer.top
+
          z: 3
       }
 
@@ -104,13 +114,15 @@ Item {
          id: footer
          z: 3
 
+         height: uiMetrics.bottomBarHeight
+
          onLostFocus: { webView.focus = true; }
          onBookmarkAdded: {
             var component = Qt.createComponent("common/TemporaryMessageWithIcon.qml");
             var message = component.createObject(browserView);
             message.iconSource = 'image://favicons/' + webView.url;
             message.title = "Bookmark Saved";
-            message.subTitle = webView.title;
+            message.subTitle = webView.title == "" ? webView.url : webView.title;
             message.showAndDestroy();
          }
       }

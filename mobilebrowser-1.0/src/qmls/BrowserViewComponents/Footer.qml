@@ -35,8 +35,10 @@ BorderImage {
    border.bottom: 1
    opacity: 1
    width: parent.width
-   height: 70
    anchors.bottom: parent.bottom
+
+   property int numberOfButtons: 5;
+   property int maxButtonWidth: width/numberOfButtons;
 
    // Back Button
    BarIcon {
@@ -46,7 +48,8 @@ BorderImage {
       onClicked: { webView.back.trigger(); }
 
       height: parent.height
-      width: height
+      width: maxButtonWidth < height ? maxButtonWidth : height;
+
       anchors.left: parent.left
       anchors.leftMargin: 5
       anchors.verticalCenter: parent.verticalCenter
@@ -60,7 +63,8 @@ BorderImage {
       onClicked: { if (appcore) appcore.loadHomeUrl(); }
 
       height: parent.height
-      width: height
+      width: maxButtonWidth < height ? maxButtonWidth : height;
+
       anchors.left: backbutton.right
       anchors.leftMargin: 5
       anchors.verticalCenter: parent.verticalCenter
@@ -74,11 +78,13 @@ BorderImage {
       onClicked: { webView.forward.trigger(); }
 
       height: parent.height
-      width: height
+      width: maxButtonWidth < height ? maxButtonWidth : height;
+
       anchors.left: homebutton.right
       anchors.leftMargin: 5
       anchors.verticalCenter: parent.verticalCenter
    }
+
 
    // New Bookmark Button
    BarIcon {
@@ -87,7 +93,9 @@ BorderImage {
       onClicked: { footer.bookmarkAdded(); if (appcore) appcore.bookmarkCurrentUrl(); footer.lostFocus(); }
 
       height: parent.height
-      width: height
+      width: maxButtonWidth < height ? maxButtonWidth : height;
+
+      //anchors.left: spacer.right;
       anchors.right: logbookviewbutton.left
       anchors.rightMargin: 5
       anchors.verticalCenter: parent.verticalCenter
@@ -100,7 +108,9 @@ BorderImage {
       onClicked: { if (appcore) appcore.showLogbookView(); }
 
       height: parent.height
-      width: height
+      width: maxButtonWidth < height ? maxButtonWidth : height;
+
+      //anchors.left: newbookmarkbutton.right;
       anchors.right: parent.right
       anchors.rightMargin: 5
       anchors.verticalCenter: parent.verticalCenter

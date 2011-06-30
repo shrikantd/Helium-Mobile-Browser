@@ -1,5 +1,9 @@
 #include "OrientationFollower.h"
-#include "qorientationsensor.h"
+
+#ifdef Q_OS_MEEGO
+    #include "qorientationsensor.h"
+#endif
+
 #include <QApplication>
 #include <QInputContext>
 
@@ -8,15 +12,20 @@ OrientationFollower::OrientationFollower(QObject *parent) :
 {
 
     // We do not follow orientation on Maemo5 as platform does the orientation change
-#if !defined(Q_WS_MAEMO_5)
+#if defined(Q_OS_MEEGO)
     m_sensor = new QtMobility::QOrientationSensor(this);
     connect(m_sensor, SIGNAL(readingChanged()), SLOT(onReadingChanged()));
     m_sensor->start();
+#elif defined(DESKTOP_BUILD)
+    //m_state("Landscape")
 #endif
+
 }
 
 OrientationFollower::~OrientationFollower() {
+#if defined(Q_OS_MEEGO)
     delete m_sensor;
+#endif
 }
 
 void OrientationFollower::update() {
@@ -32,8 +41,10 @@ enum OrientationAngle { Angle0=0, Angle90=90, Angle180=180, Angle270=270 };
 
 void OrientationFollower::onReadingChanged()
 {
+#ifdef Q_OS_MEEGO
     QtMobility::QOrientationReading* reading = m_sensor->reading();
     M::OrientationAngle mtfOrient = M::Angle0;
+
 
     switch(reading->orientation())
     {
@@ -69,5 +80,5 @@ void OrientationFollower::onReadingChanged()
     QMetaObject::invokeMethod(context,
                               "notifyOrientationChanged",
                               Q_ARG(M::OrientationAngle, mtfOrient));
-
+#endif
 }

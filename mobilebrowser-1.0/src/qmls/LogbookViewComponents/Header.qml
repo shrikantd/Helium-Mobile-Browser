@@ -43,16 +43,20 @@ BorderImage {
       style: Text.Sunken
 
       font.family: "Helvetica"
-      font.pointSize: 22
+      font.pixelSize: parent.height * 3/5;
       font.bold: true
 
-      anchors.centerIn: parent
+      anchors.centerIn: parent;
+      //anchors.verticalCenter: parent.verticalCenter;
+      //anchors.horizontalCenter: ((parent.width + paintedWidth)/2) > (doneButton.x - 10) ? undefined : parent.horizontalCenter;
+      anchors.left: ((parent.width + paintedWidth)/2) > (doneButton.x - 10) ? parent.left : undefined;
    }
 
    EmbossedButton {
       id: doneButton
       text: "Done"
-      width: 100; height: parent.height-20;
+      width: 100;
+      height: parent.height-20;
       baseColor: "#333"
 
       anchors.right: parent.right

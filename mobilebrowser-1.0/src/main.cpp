@@ -5,6 +5,10 @@
 #include "Core.h"
 #include "macros.h"
 
+#ifdef Q_OS_SYMBIAN
+    #include "sym_iap_util.h"
+#endif
+
 #include "CoreDbHelper.h"
 
 /** Message Handler for qDebug, qWarning, qCritical and qFatal messages
@@ -63,14 +67,18 @@ int main(int argc, char** argv) {
    mainView.setAttribute(Qt::WA_Maemo5AutoOrientation, true); //< "Qt::WA_Maemo5PortraitOrientation" or "Qt::WA_Maemo5LandscapeOrientation" or "Qt::WA_Maemo5AutoOrientation"
 #endif
 
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN32)
+#if defined(DESKTOP_BUILD)
    //desktop build, just open a window
-//   mainView.setWindowFlags(Qt::FramelessWindowHint);
    mainView.show();
-#else
-	//TODO recognise whether Q_OS_LINUX is defined and understand whether is meego or desktop linux
+#elif defined(MOBILE_BUILD)
    //mobile builds, we want the whole screen!
+    #ifdef Q_OS_SYMBIAN
+        //mainView.setAttribute( Qt::WA_LockPortraitOrientation );
+        mainView.setAttribute( Qt::WA_LockLandscapeOrientation );
+    #endif
    mainView.showFullScreen();
+#else
+    #error "not a MOBILE_BUILD nor a DESKTOP_BUILD, check your code dude!"
 #endif
 
 

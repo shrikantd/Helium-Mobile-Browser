@@ -48,9 +48,9 @@ Flickable {
       webView.setUrl(urlString);
    }
 
-   width: parent.width
    contentWidth: Math.max(parent.width,webView.width)
-   contentHeight: Math.max(parent.height,webView.height)   
+   contentHeight: Math.max(parent.height,webView.height)
+
    onWidthChanged: {
       // Expand (but not above 1:1) if otherwise would be smaller that available width.
       if (width > webView.width*webView.contentsScale && webView.contentsScale < 1.0)

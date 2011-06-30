@@ -44,23 +44,42 @@ BorderImage {
    opacity: 0;
    z: 5
 
-   VHScrollDropShadow { anchors.fill: parent; anchors.margins: 4; z: -1 }
+   //VHScrollDropShadow { anchors.fill: parent; anchors.margins: 4; z: -1 }
 
    Row {
-      anchors.centerIn: parent
-      spacing: 20
-      Image {
-         source: iconSource
-         smooth: true; fillMode: Image.PreserveAspectFit;
-         anchors.verticalCenter: parent.verticalCenter
-      }
+       anchors.centerIn: parent
+       spacing: 20
+       Image {
+           source: iconSource
+           smooth: true; fillMode: Image.PreserveAspectFit;
+           height: temporaryMessageWithIcon.height/2;
+           width: height;
+           //             anchors.left: parent.left;
+           //             anchors.leftMargin: 10
+           anchors.verticalCenter: parent.verticalCenter
+           //anchors.margins: 20;
+       }
 
-      Column {
-         anchors.verticalCenter: parent.verticalCenter
-         spacing: 5
-         Text { text: title; font.pointSize: 18; font.bold: true; color: "#fff"; }
-         Text { text: subTitle; font.pointSize: 12; color: "#ccc"; width: 250; elide: Text.ElideRight; }
-      }
+       Column {
+           anchors.left: iconSource.right;
+           anchors.leftMargin: 10
+           anchors.right: rowLayout.right;
+           anchors.verticalCenter: parent.verticalCenter
+           spacing: 5
+           Text {
+               id: titleLine;
+               text: title;
+               font.pixelSize: 20;
+               font.bold: true;
+               color: "#fff"; }
+           Text {
+               text: subTitle;
+               font.pixelSize: 15;
+               color: "#ccc";
+               width: titleLine.paintedWidth;
+               elide: Text.ElideRight;
+           }
+       }
    }
 
    SequentialAnimation {

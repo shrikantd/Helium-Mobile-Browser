@@ -42,6 +42,7 @@
 #include "models/HistoryListModel.h"
 #include "models/MostVisitedListModel.h"
 #include "Logbook.h"
+#include "Metrics.h"
 
 class Core : public QObject, public Declarativable
 {
@@ -75,6 +76,7 @@ public slots:
    void historyCurrentUrl();
    void showLogbookView();
    void showBrowserView();
+   void minimizeApp();
 
    void deflateLogbookViewLater();
    void hideVkb();
@@ -120,6 +122,8 @@ private:
    QDeclarativeComponent               *m_logbookViewComponent; //< Owned, as child QObject
    QGraphicsObject                     *m_logbookView; //< Owned
    Logbook                             *m_logbook; //< Owned
+
+   Metrics                             m_metrics;
 };
 
 #endif // CORE_H

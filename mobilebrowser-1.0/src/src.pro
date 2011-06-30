@@ -2,6 +2,15 @@ TARGET = helium-mobile-browser
 
 TEMPLATE = app
 
+#CONFIG += meegobuild
+
+meegobuild {
+    #ugly hack, it seems there is no macro for meego builds
+    #just hardcoding one here until a proper one will be provided by the SDK
+    message(hackish: defining Q_OS_MEEGO !!)
+    DEFINES += Q_OS_MEEGO
+}
+
 QT += declarative \
     gui \
     core \
@@ -13,17 +22,21 @@ QT += declarative \
 include(utility/utility.pri)
 include(models/models.pri)
 
-SOURCES += main.cpp \
+SOURCES += \
+    main.cpp \
     Settings.cpp \
     MainView.cpp \
     Core.cpp \
     WebViewInterface.cpp \
     CoreDbHelper.cpp \
     Logbook.cpp \
-    FaviconImageProvider.cpp
+    FaviconImageProvider.cpp \
+    OrientationFollower.cpp \
+    Metrics.cpp
 
 
-HEADERS += buildconfig.h \
+HEADERS += \
+    buildconfig.h \
     Settings.h \
     MainView.h \
     LinkItem.h \
@@ -32,7 +45,9 @@ HEADERS += buildconfig.h \
     CoreDbHelper.h \
     Logbook.h \
     LogbookLinkItems.h \
-    FaviconImageProvider.h
+    FaviconImageProvider.h \
+    OrientationFollower.h \
+    Metrics.h
 
 # Used to see the QML files in the Project view of "Qt Creator"
 OTHER_FILES += qmls/BrowserView.qml \
@@ -65,9 +80,6 @@ OTHER_FILES += qmls/BrowserView.qml \
 # Resources - DON'T forget to include the QML files
 RESOURCES += qmls.qrc
 
-include(symbian/symbian.pri)
-include(maemo5/maemo5.pri)
-
 # Desktop Specific
 #!maemo5 && !symbian {
 #   linux || win32 || macosx {
@@ -78,16 +90,7 @@ include(maemo5/maemo5.pri)
 #}
 
 
-# TODO
-# This should be made an optional feature
-# but for now this changes the build to require qt mobility for orientation tracking
-SOURCES+=OrientationFollower.cpp
-HEADERS+=OrientationFollower.h
-CONFIG+= mobility
-MOBILITY+=sensors
-
-
-debug {
+Debug {
     message(Building in DEBUG mode)
     DEFINES += QT_FATAL_WARNINGS
     DEFINES += ENABLE_LOG
@@ -95,8 +98,31 @@ debug {
     #DEFINES += INSTALL_MESSAGE_HANDLER
 }
 
-release {
+Release {
     message(Building in RELEASE mode)
+}
+
+symbian {
+    include(symbian/symbian.pri)
+}
+
+maemo5 {
+    include(maemo5/maemo5.pri)
+}
+
+symbian|maemo5|meegobuild {
+    message(building with MOBILE_BUILD on)
+    DEFINES += MOBILE_BUILD
+
+    CONFIG += mobility
+    MOBILITY += sensors
+}
+
+win32|unix {
+    !meegobuild:!maemo5:!symbian {
+        message(building with DESKTOP_BUILD on)
+        DEFINES += DESKTOP_BUILD
+    }
 }
 
 unix:!symbian {

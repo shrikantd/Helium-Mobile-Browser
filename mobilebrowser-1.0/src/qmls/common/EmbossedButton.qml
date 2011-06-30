@@ -26,7 +26,7 @@ Rectangle {
    id: embossedButton
 
    property string text: "undefined"
-   property int fontPointSize: 14
+   property int fontPixelSize: 20
    property bool highlight: false
    property bool pressed: false
    property color baseColor: "#22A"
@@ -48,6 +48,7 @@ Rectangle {
       anchors.fill: parent
       anchors.margins: -1
    }
+
    Text {
       text: parent.text
       color: "white"
@@ -55,7 +56,7 @@ Rectangle {
       style: Text.Sunken
 
       font.family: "Helvetica"
-      font.pointSize: parent.fontPointSize
+      font.pixelSize: parent.fontPixelSize
       font.bold: true
       anchors.centerIn: parent
    }
