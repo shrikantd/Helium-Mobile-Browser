@@ -178,15 +178,10 @@ QString Settings::dbFilePath() {
     QDEBUG_EXP("Settings::dbFilePath() created:", created );
     QString dbFileLocation = QDir(QDesktopServices::storageLocation( QDesktopServices::DataLocation) ).absoluteFilePath( CORE_DB_FILE_NAME );
 
+#if defined(Q_OS_SYMBIAN)
     dbFileLocation = CORE_DB_FILE_NAME;
-    //created = dir.mkpath("e:/data/ciao");
-    //QDEBUG_EXP("Settings::dbFilePath() created:", created );
-
-#if defined(Q_WS_MAEMO_5) || defined(Q_OS_LINUX)
-
-#elif defined(Q_OS_WIN32) || defined(Q_OS_SYMBIAN)
-    //dbFileLocation.replace("/","\\\\");
 #endif
+
     QDEBUG_EXP("Settings::dbFilePath()", dbFileLocation );
     return dbFileLocation;
 }
