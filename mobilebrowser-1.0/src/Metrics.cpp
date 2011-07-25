@@ -7,7 +7,7 @@ Metrics::Metrics(QObject *parent) :
 
 
 int Metrics::topBarHeight() {
-    return 90;
+    return 100;
 }
 
 int Metrics::bottomBarHeight() {

@@ -52,6 +52,7 @@ SqliteDbHelper::SqliteDbHelper(const QString &filePath, const int requestedVersi
    } else {
       m_database = QSqlDatabase::addDatabase(SQLITE_DRIVER_NAME, defaultConnName);
    }
+
    m_database.setDatabaseName(m_databaseFilepath);
    if ( m_database.isValid() && m_database.open() ) {
       if ( version() == VERSION_UNAVAILABLE ) {

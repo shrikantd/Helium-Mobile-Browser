@@ -90,7 +90,7 @@ RESOURCES += qmls.qrc
 #}
 
 
-Debug {
+debug {
     message(Building in DEBUG mode)
     DEFINES += QT_FATAL_WARNINGS
     DEFINES += ENABLE_LOG

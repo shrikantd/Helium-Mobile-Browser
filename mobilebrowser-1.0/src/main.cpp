@@ -9,7 +9,29 @@
     #include "sym_iap_util.h"
 #endif
 
-#include "CoreDbHelper.h"
+
+//#define LOG_FILE "uiLogs.txt"
+//QString logFile;
+
+
+//#include <QFile>
+//void messageOutput(QtMsgType type, const char *msg)
+// {
+//     switch (type) {
+//     case QtDebugMsg:
+//     case QtWarningMsg:
+//     case QtCriticalMsg:
+//     case QtFatalMsg:
+//         {
+//         QFile file(logFile);
+//         if (!file.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Append))
+//                 abort();
+//         file.write(msg);
+//         file.write("\r\n");
+//         file.close();
+//         }        break;
+//     }
+// }
 
 /** Message Handler for qDebug, qWarning, qCritical and qFatal messages
 @param type Message Type
@@ -20,20 +42,22 @@ void messageHandler(QtMsgType type, const char *msg)
     switch (type)
     {
     case QtDebugMsg:
-        fprintf(stderr, "OWRTTEST Debug: %s\n", msg);
+        fprintf(stdout, "OWRTTEST Debug: %s\n", msg);
         break;
     case QtWarningMsg:
-        fprintf(stderr, "OWRTTEST Warning: %s\n", msg);
+        fprintf(stdout, "OWRTTEST Warning: %s\n", msg);
         break;
     case QtCriticalMsg:
-        fprintf(stderr, "OWRTTEST Critical: %s\n", msg);
+        fprintf(stdout, "OWRTTEST Critical: %s\n", msg);
         break;
     case QtFatalMsg:
-        fprintf(stderr, "OWRTTEST Fatal: %s\n", msg);
+        fprintf(stdout, "OWRTTEST Fatal: %s\n", msg);
         break;
     }
 }
 
+
+#include <QDir>
 int main(int argc, char** argv) {
    // Register a new Message Handler for qDebug/qWarning/qCritical/qFatal
 #ifdef INSTALL_MESSAGE_HANDLER
@@ -47,12 +71,27 @@ int main(int argc, char** argv) {
    app.setOrganizationName(ORG_NAME);
    app.setOrganizationDomain(ORG_DOMAIN);
 
+
+#if defined(ENABLE_LOG)
+//    QDir dir;
+//    if( !dir.exists("e:/data/logs") ) {
+//        dir.mkpath("e:/data/logs");
+//    }
+//    logFile = QDir("e:/data/logs").absoluteFilePath(LOG_FILE);
+//    QFile log(logFile);
+//    log.resize(0);
+//    qInstallMsgHandler(messageHandler);
+#endif
+
+
+ #ifdef Q_OS_MEEGO
    // For notifying VKB of orientation changes
    // this is meego specific and should be behind flag
    QInputContext *ic = QInputContextFactory::create("MInputContext", 0);
    if(ic) {
        app.setInputContext(ic);
    }
+#endif
 
    // Init Resource Files
    Q_INIT_RESOURCE(qmls);
@@ -74,7 +113,7 @@ int main(int argc, char** argv) {
    //mobile builds, we want the whole screen!
     #ifdef Q_OS_SYMBIAN
         //mainView.setAttribute( Qt::WA_LockPortraitOrientation );
-        mainView.setAttribute( Qt::WA_LockLandscapeOrientation );
+        //mainView.setAttribute( Qt::WA_LockLandscapeOrientation );
     #endif
    mainView.showFullScreen();
 #else

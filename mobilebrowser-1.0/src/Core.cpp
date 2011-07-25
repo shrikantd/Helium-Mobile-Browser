@@ -65,8 +65,8 @@ Core::Core(MainView *mainView, QObject *parent) :
 #else
     #error "not a MOBILE_BUILD nor a DESKTOP_BUILD, check your code dude!"
 #endif
-   context->setContextProperty("screenWidth", screenSize.width());
-   context->setContextProperty("screenHeight", screenSize.height());
+//   context->setContextProperty("screenWidth", screenSize.width());
+//   context->setContextProperty("screenHeight", screenSize.height());
 
    context->setContextProperty("Orientation", orientation);
    context->setContextProperty("mainWindow", mainView);

@@ -174,12 +174,18 @@ void Settings::reloadWebSettings() {
 
 QString Settings::dbFilePath() {
     QDir dir;
-    dir.mkpath(QDesktopServices::storageLocation( QDesktopServices::DataLocation));
+    bool created = dir.mkpath(QDesktopServices::storageLocation( QDesktopServices::DataLocation));
+    QDEBUG_EXP("Settings::dbFilePath() created:", created );
     QString dbFileLocation = QDir(QDesktopServices::storageLocation( QDesktopServices::DataLocation) ).absoluteFilePath( CORE_DB_FILE_NAME );
+
+    dbFileLocation = CORE_DB_FILE_NAME;
+    //created = dir.mkpath("e:/data/ciao");
+    //QDEBUG_EXP("Settings::dbFilePath() created:", created );
+
 #if defined(Q_WS_MAEMO_5) || defined(Q_OS_LINUX)
 
 #elif defined(Q_OS_WIN32) || defined(Q_OS_SYMBIAN)
-    dbFileLocation.replace("/","\\\\");
+    //dbFileLocation.replace("/","\\\\");
 #endif
     QDEBUG_EXP("Settings::dbFilePath()", dbFileLocation );
     return dbFileLocation;

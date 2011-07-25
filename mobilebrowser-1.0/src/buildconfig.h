@@ -29,7 +29,7 @@
 
 /** ------------------------------------- Proxy default Config */
 //#define USE_NETWORK_PROXY //< Comment this to disable the usage of this Proxy
-#define NETWORK_PROXY_HOSTNAME  "p-goodway"
+#define NETWORK_PROXY_HOSTNAME  ""
 #define NETWORK_PROXY_PORT      3128
 
 /** ------------------------------------- OpenGL default Config */

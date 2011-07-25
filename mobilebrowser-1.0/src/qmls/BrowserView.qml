@@ -32,8 +32,8 @@ import "common"
 Item {
    id: browserView
 
-   width: screenWidth
-   height: screenHeight
+   width: Orientation.screenWidth
+   height: Orientation.screenHeight
    state: Orientation.state
 
    Item {
@@ -133,47 +133,52 @@ Item {
            name: "Landscape"
            PropertyChanges {
                target: browserView
-               rotation: 0
-               width: screenWidth
-               height: screenHeight
-               x: 0
-               y: 0
+               rotation: Orientation.landscapeRotation
+               x: Orientation.xPosition;
+               y: Orientation.yPosition;
            }
        },
        State {
            name: "LandscapeInverted"
            PropertyChanges {
                target: browserView
-               rotation: 180
-               width: screenWidth
-               height: screenHeight
-               x: 0
-               y: 0
+               rotation: Orientation.landscapeInvertedRotation
+               x: Orientation.xPosition;
+               y: Orientation.yPosition;
            }
        },
        State {
            name: "Portrait"
            PropertyChanges {
                target: browserView
-               rotation: 270
-               width: screenHeight
-               height: screenWidth
-               x: (screenWidth - screenHeight) / 2
-               y: -(screenWidth - screenHeight) / 2
+               rotation: Orientation.portraitRotation
+               x: Orientation.xPosition;
+               y: Orientation.yPosition;
            }
        },
        State {
            name: "PortraitInverted"
            PropertyChanges {
                target: browserView
-               rotation: 90
-               width: screenHeight
-               height: screenWidth
-               x: (screenWidth - screenHeight) / 2
-               y: -(screenWidth - screenHeight) / 2
+               rotation: Orientation.portraitInvertedRotation
+               x: Orientation.xPosition;
+               y: Orientation.yPosition;
            }
        }
    ]
+
+   onWidthChanged: {
+       console.log("---------------------- width: " + width );
+       state = Orientation.state;
+   }
+   onHeightChanged: {
+       console.log("---------------------- height: " + height );
+       state = Orientation.state;
+   }
+
+   onStateChanged: {
+       console.log("---------------------- state: " + state );
+   }
 
    transitions: [
        Transition {
