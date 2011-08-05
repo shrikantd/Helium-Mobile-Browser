@@ -9,30 +9,6 @@
     #include "sym_iap_util.h"
 #endif
 
-
-//#define LOG_FILE "uiLogs.txt"
-//QString logFile;
-
-
-//#include <QFile>
-//void messageOutput(QtMsgType type, const char *msg)
-// {
-//     switch (type) {
-//     case QtDebugMsg:
-//     case QtWarningMsg:
-//     case QtCriticalMsg:
-//     case QtFatalMsg:
-//         {
-//         QFile file(logFile);
-//         if (!file.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Append))
-//                 abort();
-//         file.write(msg);
-//         file.write("\r\n");
-//         file.close();
-//         }        break;
-//     }
-// }
-
 /** Message Handler for qDebug, qWarning, qCritical and qFatal messages
 @param type Message Type
 @param msg Message Body
@@ -71,19 +47,6 @@ int main(int argc, char** argv) {
    app.setOrganizationName(ORG_NAME);
    app.setOrganizationDomain(ORG_DOMAIN);
 
-
-#if defined(ENABLE_LOG)
-//    QDir dir;
-//    if( !dir.exists("e:/data/logs") ) {
-//        dir.mkpath("e:/data/logs");
-//    }
-//    logFile = QDir("e:/data/logs").absoluteFilePath(LOG_FILE);
-//    QFile log(logFile);
-//    log.resize(0);
-//    qInstallMsgHandler(messageHandler);
-#endif
-
-
  #ifdef Q_OS_MEEGO
    // For notifying VKB of orientation changes
    // this is meego specific and should be behind flag
@@ -111,15 +74,10 @@ int main(int argc, char** argv) {
    mainView.show();
 #elif defined(MOBILE_BUILD)
    //mobile builds, we want the whole screen!
-    #ifdef Q_OS_SYMBIAN
-        //mainView.setAttribute( Qt::WA_LockPortraitOrientation );
-        //mainView.setAttribute( Qt::WA_LockLandscapeOrientation );
-    #endif
    mainView.showFullScreen();
 #else
     #error "not a MOBILE_BUILD nor a DESKTOP_BUILD, check your code dude!"
 #endif
-
 
    // The Core of the Application
    Core core(&mainView);

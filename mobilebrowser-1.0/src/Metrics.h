@@ -13,9 +13,6 @@ public:
     Q_PROPERTY( int bottomBarHeight READ bottomBarHeight);
 
     Q_PROPERTY( int tabButtonPixelSize READ tabButtonPixelSize );
-//    Q_PROPERTY( int topBarHeight READ topBarHeight );
-//    Q_PROPERTY( int topBarHeight READ topBarHeight );
-//    Q_PROPERTY( int topBarHeight READ topBarHeight );
 
     int topBarHeight();
     int bottomBarHeight();

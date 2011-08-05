@@ -203,13 +203,10 @@ Item {
                anchors.fill:  parent;
                anchors.topMargin: parent.border.width + 1
                anchors.bottomMargin: parent.border.width + 1
-               //anchors.left: urlBox.left
-               //anchors.right: urlBox.right
+
                anchors.leftMargin: parent.border.width + 2
                anchors.rightMargin: parent.border.width + 2
 
-               //anchors.verticalCenter: urlBox.verticalCenter
-               //anchors.verticalCenterOffset: 1
             }
          }
       }

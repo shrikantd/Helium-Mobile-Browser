@@ -47,8 +47,6 @@ BorderImage {
       font.bold: true
 
       anchors.centerIn: parent;
-      //anchors.verticalCenter: parent.verticalCenter;
-      //anchors.horizontalCenter: ((parent.width + paintedWidth)/2) > (doneButton.x - 10) ? undefined : parent.horizontalCenter;
       anchors.left: ((parent.width + paintedWidth)/2) > (doneButton.x - 10) ? parent.left : undefined;
    }
 

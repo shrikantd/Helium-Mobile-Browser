@@ -79,7 +79,7 @@ Item {
 
    Image {
       id: favIcon
-//      height: parent.height
+
       width: height
       smooth: true; asynchronous: true;
       fillMode: Image.PreserveAspectFit
@@ -123,8 +123,6 @@ Item {
       anchors.right: reloadIcon.left
       anchors.margins: 4
 
-
-      //anchors.verticalCenter: parent.verticalCenter
       color: "#444444"
 
       font.family: "Helvetica"

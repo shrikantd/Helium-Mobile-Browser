@@ -168,16 +168,10 @@ Item {
    ]
 
    onWidthChanged: {
-       console.log("---------------------- width: " + width );
        state = Orientation.state;
    }
    onHeightChanged: {
-       console.log("---------------------- height: " + height );
        state = Orientation.state;
-   }
-
-   onStateChanged: {
-       console.log("---------------------- state: " + state );
    }
 
    transitions: [

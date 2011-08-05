@@ -54,10 +54,7 @@ BorderImage {
            smooth: true; fillMode: Image.PreserveAspectFit;
            height: temporaryMessageWithIcon.height/2;
            width: height;
-           //             anchors.left: parent.left;
-           //             anchors.leftMargin: 10
            anchors.verticalCenter: parent.verticalCenter
-           //anchors.margins: 20;
        }
 
        Column {

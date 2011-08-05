@@ -55,19 +55,6 @@ Core::Core(MainView *mainView, QObject *parent) :
 
    QDeclarativeContext *context = mainView->rootContext();
 
-
-   QRect screenSize;
-#if defined(DESKTOP_BUILD)
-   //desktop build, defaults
-   screenSize = QRect( 0,0, DEFAULT_WIDTH, DEFAULT_HEIGHT );
-#elif defined(MOBILE_BUILD)
-   screenSize = QRect( 0,0, qApp->desktop()->width(), qApp->desktop()->height() );
-#else
-    #error "not a MOBILE_BUILD nor a DESKTOP_BUILD, check your code dude!"
-#endif
-//   context->setContextProperty("screenWidth", screenSize.width());
-//   context->setContextProperty("screenHeight", screenSize.height());
-
    context->setContextProperty("Orientation", orientation);
    context->setContextProperty("mainWindow", mainView);
 
@@ -226,16 +213,11 @@ void Core::onShowBrowserView() {
    }
 
    removeLogbookViewFromScene();
-//   inflateBookmarksListModel();
-//   inflateMostVisitedListModel();
-//   inflateHistoryListModel();
-//   m_mainView->setSource(QUrl(LOGBOOKVIEW_QML));
 }
 
 void Core::deflateLogbookViewLater() {
     QDEBUG("Core::deflateLogbookViewLater()");
     QTimer::singleShot(0, this, SLOT(deflateLogbookView()));
-    //QMetaObject::invokeMethod( this, "deflateLogbookView", Qt::QueuedConnection );
 }
 
 void Core::onShowLogbookView() {
