@@ -2,7 +2,11 @@
 #define ORIENTATIONFOLLOWER_H
 
 #include <QString>
+#include <QObject>
+
+#ifdef ORIENTATION_ENABLE
 #include "qorientationsensor.h"
+#endif
 
 class OrientationFollower : public QObject
 {
@@ -23,8 +27,9 @@ private slots:
 
 private:
     QString m_state;
+#ifdef ORIENTATION_ENABLE
     QtMobility::QOrientationSensor* m_sensor;
-
+#endif
 };
 
 #endif // ORIENTATIONFOLLOWER_H

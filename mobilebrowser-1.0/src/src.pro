@@ -84,11 +84,11 @@ include(maemo5/maemo5.pri)
 orientation {
     message(mobility included)
     DEFINES+= ORIENTATION_ENABLE
-    SOURCES+=OrientationFollower.cpp
-    HEADERS+=OrientationFollower.h
     CONFIG+= mobility
     MOBILITY+=sensors
 }
+SOURCES+=OrientationFollower.cpp
+HEADERS+=OrientationFollower.h
 
 debug {
     message(Building in DEBUG mode)

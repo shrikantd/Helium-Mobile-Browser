@@ -17,9 +17,7 @@
 #include "Settings.h"
 #include "FaviconImageProvider.h"
 
-#ifdef  ORIENTATION_ENABLE
 #include "OrientationFollower.h"
-#endif
 
 #define ENGINE_BASEURL                    "qrc:/qmls/"
 #define BROWSERVIEW_QML                   "BrowserView.qml"
@@ -42,10 +40,7 @@ Core::Core(MainView *mainView, QObject *parent) :
 {
 
    // Let's start tracking orientation
-#ifdef ORIENTATION_ENABLE
     OrientationFollower * orientation = new OrientationFollower(this);
-#endif
-
     QDeclarativeContext *context = mainView->rootContext();
 
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN32)
@@ -58,11 +53,7 @@ Core::Core(MainView *mainView, QObject *parent) :
    context->setContextProperty("screenWidth", qApp->desktop()->width());
    context->setContextProperty("screenHeight", qApp->desktop()->height());
 #endif
-
-#ifdef ORIENTATION_ENABLE
    context->setContextProperty("Orientation", orientation);
-#endif
-
    context->setContextProperty("mainWindow", mainView);
 
    // Initialize Settings
