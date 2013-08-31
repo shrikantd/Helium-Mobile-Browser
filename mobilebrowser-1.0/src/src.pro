@@ -81,11 +81,14 @@ include(maemo5/maemo5.pri)
 # TODO
 # This should be made an optional feature
 # but for now this changes the build to require qt mobility for orientation tracking
-SOURCES+=OrientationFollower.cpp
-HEADERS+=OrientationFollower.h
-CONFIG+= mobility
-MOBILITY+=sensors
-
+orientation {
+    message(mobility included)
+    DEFINES+= ORIENTATION_ENABLE
+    SOURCES+=OrientationFollower.cpp
+    HEADERS+=OrientationFollower.h
+    CONFIG+= mobility
+    MOBILITY+=sensors
+}
 
 debug {
     message(Building in DEBUG mode)
